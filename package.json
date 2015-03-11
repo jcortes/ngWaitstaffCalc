@@ -1,0 +1,8 @@
+{
+	"name": "ngWaitstaffCall",
+	"version": "0.0.1",
+	"description": "ngWaitstaffCall",
+	"dependencies": {
+		"http-server": "latest"
+	}
+}
