@@ -1,0 +1,2 @@
+# ngWaitstaffCalc
+Waitstaff Calculator
