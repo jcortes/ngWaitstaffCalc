@@ -1,7 +1,29 @@
 .container {
-    width: 870px;
+    width: 70%;
 }
 
+.input-row {
+    margin-bottom: 3.4em;
+    padding-right: 4em;
+}
+
+.btn {
+    padding: 6px 42px;
+    
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+}
 .error {
     color: crimson;
+}
+
+.panel-primary-right {
+    border-color: #4caf50;
+}
+
+.panel-primary-right > .panel-heading-right {
+    color: #FFF;
+    background-color: #4caf50;
+    border-color: #4caf50;
 }

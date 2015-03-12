@@ -10,157 +10,139 @@
 
 <body ng-app="waitCalc" ng-controller="calCtrl">
     
-    <div class="container text-center">
-        <header>
-            <div class="page-header">
-                <h1>Waitstaff Calculator</h1>
-            </div>
-        </header>
-    </div>
+    <header class="container text-center">
+        <div class="page-header">
+            <h1>Waitstaff Calculator</h1>
+        </div>
+    </header>
     
-    <div class="container">
-        <div class="row text-center">
-            
-            <div class="col-md-6">
-                <section>
-                    <div class="panel panel-primary">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">Enter the Meal Details</h3>
-                      </div>
-                      <div class="panel-body">
-                          
-                          <form name="frm" ng-submit="submit()" novalidate>
-                              <div class="row">
-                                  <div class="col-md-6 text-right">
-                                      <label>Base Meal Price: $</label>
-                                  </div>
-                                  <div class="col-md-6 text-left">
-                                      <input type="decimal" name="base_meal_price" required/>
-                                      <div ng-if="frm.$submitted" ng-messages="frm.base_meal_price.$error">
-                                        <span ng-message="required">Base Meal Price field is required</span>
-                                    </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6 text-right">
-                                      <label>Tax Rate: %</label>
-                                  </div>
-                                  <div class="col-md-6 text-left">
-                                      <input type="number" required/>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6 text-right">
-                                      <label>Tip Percentage: %</label>
-                                  </div>
-                                  <div class="col-md-6 text-left">
-                                      <input type="number" required/>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6 text-right">
-                                      <input type="submit" value="Submit" class="btn btn-primary" role="button"/>
-                                  </div>
-                                  <div class="col-md-6 text-left">
-                                      <input type="button" value="Cancel" class="btn btn-primary" role="button"/>
-                                  </div>
-                              </div>
-                          </form>
-                          
-                      </div>
+    <div class="container text-center">          
+        <section class="col-md-6">
+            <section class="panel panel-primary">
+                <header class="panel-heading">
+                    <h3 class="panel-title">Enter the Meal Details</h3>
+                </header>
+                <form class="panel-body" name="frm" ng-submit="submit()" novalidate>
+                    <div class="row input-row">
+                        <div class="col-md-12 text-right">
+                            <label for="base_meal_price">Base Meal Price: $</label>
+                            <input type="number" name="base_meal_price" ng-model="data.base_meal_price" required/>
+                            <div ng-if="frm.$submitted" ng-messages="frm.base_meal_price.$error">
+                                <span class="error" ng-message="required">Base Meal Price field is required</span>
+                                <span class="error" ng-message="number">Base Meal Price must be a number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row input-row">
+                        <div class="col-md-12 text-right">
+                            <label for="tax_rate">Tax Rate: %</label>
+                            <input type="number" name="tax_rate" ng-model="data.tax_rate" required/>
+                            <div ng-if="frm.$submitted" ng-messages="frm.tax_rate.$error">
+                                <span class="error" ng-message="required">Tax Rate field is required</span>
+                                <span class="error" ng-message="number">Tax Rate must be a number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row input-row">
+                        <div class="col-md-12 text-right">
+                            <label for="tip_perc">Tip Percentage: %</label>
+                            <input type="number" name="tip_perc" ng-model="data.tip_perc" required/>
+                            <div ng-if="frm.$submitted" ng-messages="frm.tip_perc.$error">
+                                <span class="error" ng-message="required">Tip Percentage field is required</span>
+                                <span class="error" ng-message="number">Tip Percentage must be a number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <input type="submit" value="Submit" class="btn btn-primary" role="button"/>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <input type="button" value="Cancel" class="btn btn-primary" role="button" ng-click="clear()"/>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </section>
+
+        <aside class="col-md-6">
+            <section class="panel panel-primary panel-primary-right">
+                <header class="panel-heading panel-heading-right">
+                    <h3 class="panel-title">Customer Charges</h3>
+                </header>
+                <section class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Subtotal</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.subtotal | currency}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Tip</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.tip | currency}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">______________</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Total</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.subtotal + data.tip | currency}}</label>
+                        </div>
                     </div>
                 </section>
-            </div>
+            </section>
 
-            <div class="col-md-6">
-                <aside>
-                    <div class="panel panel-primary">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">Customer Charges</h3>
-                      </div>
-                      <div class="panel-body">
-                          
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Subtotal</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0.00</label>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Tip</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0.00</label>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">_________________</div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Total</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0.00</label>
-                              </div>
-                          </div>
-                          
-                      </div>
+            <section class="panel panel-primary panel-primary-right">
+                <header class="panel-heading panel-heading-right">
+                    <h3 class="panel-title">My Earnings Info</h3>
+                </header>
+                <section class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Tip Total</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.tiptotal_count | currency}}</label>
+                        </div>
                     </div>
-                </aside>
-
-                <aside>
-                    <div class="panel panel-primary">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">My Earnings Info</h3>
-                      </div>
-                      <div class="panel-body">
-                          
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Tip Total</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0.00</label>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Meal Count</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0</label>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6 text-right">
-                                  <label>Average Tip Per Meal</label>
-                              </div>
-                              <div class="col-md-6 text-left">
-                                  <label>0.00</label>
-                              </div>
-                          </div>
-                      </div>
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Meal Count</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.meal_count | number}}</label>
+                        </div>
                     </div>
-                </aside>
-                
-            </div>
-        </div>
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <label>Average Tip Per Meal</label>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <label>{{data.average_count | currency}}</label>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </aside>
         
         <div class="row text-right">
             <div class="col-md-3 col-md-offset-9">
-                <input type="button" value="Reset" class="btn btn-primary" role="button"/>
+                <input type="button" value="Reset" class="btn btn-danger" role="button" ng-click="reset()"/>
             </div>
         </div>
     </div>
     
     <script data-require="angular.js@1.3.10" data-semver="1.3.10" src="https://code.angularjs.org/1.3.10/angular.js"></script>
     <script src="https://code.angularjs.org/1.3.9/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
