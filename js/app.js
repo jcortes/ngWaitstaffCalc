@@ -1,32 +1,35 @@
 angular.module('waitCalc', ['ngMessages'])
 
-.controller('calCtrl', function ($scope) {
+.controller('MainCtrl', function($scope){
+    var vm = this;
     
-    $scope.data = {};
+    vm.reset = function(){        
+        $scope.$broadcast('reset', {});
+    };
+})
+
+.controller('DetailCtrl', function($scope, $rootScope){
+    var vm = this;
     
-    // Meal Detailes fields
-    $scope.data.base_meal_price = null;
-    $scope.data.tax_rate = null;
-    $scope.data.tip_perc = null;
+    function defaultReset(withFrm){
+        if(withFrm){
+            $scope.frm.$submitted = false;
+        }
+        // Meal Detailes fields
+        vm.base_meal_price = null;
+        vm.tax_rate = null;
+        vm.tip_perc = null;
+    }
     
-    // Default Customer Charges
-    $scope.data.subtotal = 0;
-    $scope.data.tip = 0;
-    
-    // Default Earnings Info
-    $scope.data.tiptotal_count = 0;
-    $scope.data.meal_count = 0;
-    $scope.data.average_count = 0;
-    
+    defaultReset(false);
     var tip_count = 0;
     var meal_count = 0;
     
-    $scope.submit = function(){
-        
+    vm.submit = function(){
         if($scope.frm.$valid){
-            var bmp = $scope.data.base_meal_price;
-            var tr = $scope.data.tax_rate;
-            var t = $scope.data.tip_perc;
+            var bmp = vm.base_meal_price;
+            var tr = vm.tax_rate;
+            var t = vm.tip_perc;
             
             var tax = (bmp * tr)/100;
             var subtotal = bmp + tax;
@@ -37,37 +40,69 @@ angular.module('waitCalc', ['ngMessages'])
             
             var average_count = tip_count / meal_count;
             
-            // Customer Charges
-            $scope.data.subtotal = subtotal;
-            $scope.data.tip = tip;
+            var data = {
+                subtotal: subtotal,
+                tip: tip,
+                tiptotal_count: tip_count,
+                meal_count: meal_count,
+                average_count: average_count
+            };
             
-            // Earnings Info
-            $scope.data.tiptotal_count = tip_count;
-            $scope.data.meal_count = meal_count;
-            $scope.data.average_count = average_count;
+            $rootScope.$broadcast('submit', data);
         }
     };
     
-    $scope.clear = function(){
-        $scope.frm.$submitted = false;
-        $scope.data.base_meal_price = null;
-        $scope.data.tax_rate = null;
-        $scope.data.tip_perc = null;
+    vm.clear = function(){
+        defaultReset(true);
     };
     
-    $scope.reset = function(){
-        $scope.frm.$submitted = false;
-        $scope.data.base_meal_price = null;
-        $scope.data.tax_rate = null;
-        $scope.data.tip_perc = null;
-        
-        // Default Customer Charges
-        $scope.data.subtotal = 0;
-        $scope.data.tip = 0;
+    $scope.$on('reset', function(event, data){
+        defaultReset(true);
+        tip_count = 0;
+        meal_count = 0;
+    });
+})
 
+.controller('ChargesCtrl', function($scope){
+    var vm = this;
+    
+    function resetDefault(){
+        // Default Customer Charges
+        vm.subtotal = 0;
+        vm.tip = 0;
+    }
+    
+    resetDefault();
+    
+    $scope.$on('submit', function(event, data){
+        vm.subtotal = data.subtotal;
+        vm.tip = data.tip;
+    });
+    
+    $scope.$on('reset', function(event, data){
+        resetDefault();
+    });
+})
+
+.controller('InfoCtrl', function($scope){
+    var vm = this;
+    
+    function resetDefault(){
         // Default Earnings Info
-        $scope.data.tiptotal_count = 0;
-        $scope.data.meal_count = 0;
-        $scope.data.average_count = 0;
-    };
+        vm.tiptotal_count = 0;
+        vm.meal_count = 0;
+        vm.average_count = 0;
+    }
+    
+    resetDefault();
+    
+    $scope.$on('submit', function(event, data){
+        vm.tiptotal_count = data.tiptotal_count;
+        vm.meal_count = data.meal_count;
+        vm.average_count = data.average_count;
+    });
+    
+    $scope.$on('reset', function(event, data){
+        resetDefault();
+    });
 });
