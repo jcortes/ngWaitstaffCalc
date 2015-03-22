@@ -14,7 +14,9 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
         controller: 'MyEarningsCtrl as mec'
     })
     .when('/error', {
-        template: '<p>Error - Page Not Found</p>'
+        template: '<div class="container text-center">\
+                        <p>Error - Page Not Found</p>\
+                    </div>'
     })
     .otherwise('/error');
 })
@@ -30,11 +32,10 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
         srvData.base_meal_price = null;
         srvData.tax_rate = null;
         srvData.tip_perc = null;
-        
         // Default Customer Charges
         srvData.subtotal = 0;
         srvData.tip = 0;
-    };
+    }
     
     function reset(){
         clear();
@@ -44,7 +45,7 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
         srvData.average_count = 0;
         tip_count = 0;
         meal_count = 0;
-    };
+    }
     
     function calc(){
         var bmp = srvData.base_meal_price;
@@ -65,7 +66,7 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
         srvData.tiptotal_count = tip_count;
         srvData.meal_count = meal_count;
         srvData.average_count = average_count;
-    };
+    }
     
     function get(){
         return srvData;
@@ -79,8 +80,7 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
     };
 })
 
-.controller('HomeCtrl', ['$scope', function($scope){
-}])
+.controller('HomeCtrl', ['$scope', function($scope){}])
 
 .controller('NewMealCtrl', ['$scope', 'srvData', function($scope, srvData){
     var vm = this;
@@ -104,5 +104,5 @@ angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
     vm.reset = function(){
         srvData.reset();
         vm.data = srvData.get();
-    }
+    };
 }]);
