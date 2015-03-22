@@ -1,0 +1,41 @@
+<div class="container text-center">
+    <section class="col-md-6 col-md-offset-3">
+        <section class="panel panel-primary panel-primary-right">
+            <header class="panel-heading panel-heading-right">
+                <h3 class="panel-title">My Earnings Info</h3>
+            </header>
+            <section class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Tip Total</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{mec.data.tiptotal_count | currency}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Meal Count</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{mec.data.meal_count | number}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Average Tip Per Meal</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{mec.data.average_count | currency}}</label>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+
+    <div class="row text-right">
+        <div class="col-md-3 col-md-offset-6">
+            <input type="button" value="Reset" class="btn btn-danger" role="button" ng-click="mec.reset()"/>
+        </div>
+    </div>
+</div>

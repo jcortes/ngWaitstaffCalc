@@ -1,0 +1,86 @@
+<div class="container text-center">
+    <section class="col-md-6">
+        <section class="panel panel-primary">
+            <header class="panel-heading">
+                <h3 class="panel-title">Enter the Meal Details</h3>
+            </header>
+            <form ng-submit="nmc.submit()" class="panel-body" name="frm" novalidate>
+                <div class="row input-row">
+                    <div class="col-md-12 text-right">
+                        <label for="base_meal_price">Base Meal Price: $</label>
+                        <input type="number" name="base_meal_price" ng-model="nmc.data.base_meal_price" required/>
+                        <div ng-if="frm.$submitted" ng-messages="frm.base_meal_price.$error">
+                            <span class="error" ng-message="required">Base Meal Price field is required</span>
+                            <span class="error" ng-message="number">Base Meal Price must be a number</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-12 text-right">
+                        <label for="tax_rate">Tax Rate: %</label>
+                        <input type="number" name="tax_rate" ng-model="nmc.data.tax_rate" required/>
+                        <div ng-if="frm.$submitted" ng-messages="frm.tax_rate.$error">
+                            <span class="error" ng-message="required">Tax Rate field is required</span>
+                            <span class="error" ng-message="number">Tax Rate must be a number</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-12 text-right">
+                        <label for="tip_perc">Tip Percentage: %</label>
+                        <input type="number" name="tip_perc" ng-model="nmc.data.tip_perc" required/>
+                        <div ng-if="frm.$submitted" ng-messages="frm.tip_perc.$error">
+                            <span class="error" ng-message="required">Tip Percentage field is required</span>
+                            <span class="error" ng-message="number">Tip Percentage must be a number</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <input type="submit" value="Submit" class="btn btn-primary" role="button"/>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <input type="button" value="Cancel" class="btn btn-primary" role="button" ng-click="nmc.clear()"/>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </section>
+
+    <aside class="col-md-6">
+        <section class="panel panel-primary panel-primary-right">
+            <header class="panel-heading panel-heading-right">
+                <h3 class="panel-title">Customer Charges</h3>
+            </header>
+            <section class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Subtotal</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{nmc.data.subtotal | currency}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Tip</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{nmc.data.tip | currency}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">______________</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        <label>Total</label>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <label>{{nmc.data.subtotal + nmc.data.tip | currency}}</label>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </aside>
+</div>
