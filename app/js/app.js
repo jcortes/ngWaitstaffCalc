@@ -1,5 +1,19 @@
 angular.module('waitCalc', ['ngMessages', 'ngRoute', 'ngAnimate'])
 
+.run(function($rootScope, $location, $timeout){
+    $rootScope.$on('$routeChangeError', function(){
+        $location.path('/error');
+    });
+    $rootScope.$on('$routeChangeStart', function(){
+        
+    });
+    $rootScope.$on('$routeChangeSuccess', function(){
+        $timeout(function() {
+            
+        }, 1000);
+    });
+})
+
 .config(function($routeProvider){
     $routeProvider.when('/', {
         templateUrl: 'app/home.html',
